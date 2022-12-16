@@ -15,5 +15,9 @@
     "weather"
   ],
   "author": "Nikolay Kotikov",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^5.2.0",
+    "dedent": "^0.7.0"
+  }
 }
