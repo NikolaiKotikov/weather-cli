@@ -1,16 +1,25 @@
 import { homedir } from 'os'
-import { join, basename, dirname, extname, relative, isAbsolute, resolve, sep } from 'path'
+import { join } from 'path'
+import { promises } from 'fs'
 
 const filePath = join(homedir(), 'weather-data.json')
 
-const saveKeyValue = (key, value) => {
-  console.log(basename(filePath))
-  console.log(dirname(filePath))
-  console.log(extname(filePath))
-  console.log(relative(filePath, dirname(filePath)))
-  console.log(isAbsolute(filePath))
-  console.log(resolve('..'))
-  console.log(sep)
+const isExists = async (path) => {
+  try {
+    await promises.stat(path)
+  } catch (error) {
+    return false
+  }
+}
+
+const saveKeyValue = async (key, value) => {
+  const data = {}
+  if (await isExists(filePath)) {
+    const file = await promises.readFile(filePath)
+    data = JSON.parse(file)
+  }
+  data[key] = value
+  await promises.writeFile(filePath, JSON.stringify(data))
 }
 
 export { saveKeyValue }
