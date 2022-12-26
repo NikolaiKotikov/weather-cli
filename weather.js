@@ -5,7 +5,7 @@ import { printError, printHelp, printSuccess } from "./services/log.service.js"
 import { saveKeyValue } from "./services/storage.service.js"
 
 const saveToken = async (token) => {
-  if (!token?.trim?.()?.length()) {
+  if (!token?.trim?.()?.length) {
     printError('Token not provided')
     return
   }
