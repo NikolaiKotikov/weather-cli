@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 
 import { getArgs } from "./helpers/args.js"
+import { Arg } from './helpers/const.js'
+import { getWeather } from "./services/api.service.js"
 import { printError, printHelp, printSuccess } from "./services/log.service.js"
 import { saveKeyValue } from "./services/storage.service.js"
 
@@ -10,7 +12,7 @@ const saveToken = async (token) => {
     return
   }
   try {
-    await saveKeyValue('token', token)
+    await saveKeyValue(Arg.token, token)
     printSuccess('Token Saved')
   } catch (error) {
     printError(error.message)
@@ -35,6 +37,7 @@ const initCLI = () => {
   }
 
   // output weather
+  getWeather('moscow')
 }
 
 initCLI()
