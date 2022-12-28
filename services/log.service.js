@@ -1,5 +1,7 @@
-import chalk from 'chalk'
-import dedent from 'dedent'
+import chalk from 'chalk';
+import dedent from 'dedent';
+import terminalImage from 'terminal-image';
+import { getIcon } from './api.service.js';
 
 const printError = (error) => {
     console.log(chalk.bgRed('ERROR'), error)
@@ -20,4 +22,18 @@ const printHelp = () => {
     )
 }
 
-export { printError, printSuccess, printHelp }
+const printWeather = async (data) => {
+    const icon = await getIcon(data.weather[0].icon)
+    console.log(await terminalImage.buffer(icon, { width: '12.5%' }));
+    console.log(
+        dedent(`
+        ${data.weather[0].description}
+        ${chalk.blue.bold('City:')} ${data.name}
+        ${chalk.blue.bold('Temp:')} ${data.main.temp}
+        ${chalk.blue.bold('Feels like:')} ${data.main.feels_like}
+        `)
+    )
+    // console.log(data)
+}
+
+export { printError, printSuccess, printHelp, printWeather };
